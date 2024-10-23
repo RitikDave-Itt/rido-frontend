@@ -1,0 +1,49 @@
+Result
+HTML
+Edit in JSFiddle
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Basic Maps</title>
+<link href="https://tiles.locationiq.com/v3/libs/leaflet/1.8.0/leaflet.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://tiles.locationiq.com/v3/libs/leaflet/1.8.0/leaflet.js"></script>
+<script type="text/javascript" src="https://tiles.locationiq.com/v3/js/liq-styles-ctrl-leaflet.js?v=0.1.8"></script>
+<style type="text/css">
+            body {
+                margin: 0;
+            }
+            #map {
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript">
+            // Maps access token goes here
+            var key = 'pk.497b544ac94643b29a29c69a592473dd';
+
+            // Add layers that we need to the map
+            var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+
+            // Initialize the map
+            var map = L.map('map', {
+                center: [39.73, -104.99], // Map loads with this location as center
+                zoom: 14,
+                scrollWheelZoom: false,
+                layers: [streets]         // Show 'streets' by default
+            });
+
+            // Add the 'scale' control
+            L.control.scale().addTo(map);
+
+            // Add the 'layers' control
+            L.control.layers({
+                "Streets": streets
+            }).addTo(map);
+
+        </script>
+</body>
+</html>
