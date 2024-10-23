@@ -1,6 +1,7 @@
+import Login from '@/components/login/Login';
+import Signup from '@/components/signup/Signup';
 import React, { useState } from 'react';
-import Login from './../components/Login';  
-import Signup from '../components/Signup';  
+
 
 const Auth: React.FC = () => {
   const [activeTab, setActiveTab] = useState('login'); 
@@ -10,7 +11,7 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-background-light p-6 rounded-lg shadow-md w-full max-w-4xl mx-auto h-[100%]">
+    <div className="flex flex-col md:flex-row bg-background-light p-6 rounded-lg shadow-md w-full max-w-4xl mx-auto h-[80%] ">
       
       <div className='md:w-3/4 w-full'>
         <div className="flex justify-between ">
@@ -32,7 +33,7 @@ const Auth: React.FC = () => {
           </button>
         </div>
         <div className=" flex justify-center items-center mt-4 h-[90%] ">
-          {activeTab === 'login' ? <Login /> : <Signup />}
+          {activeTab === 'login' ? <div className='h-full w-full flex items-center'><Login /></div> : <Signup />}
         </div>
       </div>
 

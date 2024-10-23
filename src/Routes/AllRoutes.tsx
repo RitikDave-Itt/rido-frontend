@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
-import Home from '../pages/Home';
+import Home from '@/pages/home/Home';
 
 const AllRoutes = () => {
    

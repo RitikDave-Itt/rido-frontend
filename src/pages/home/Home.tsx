@@ -1,37 +1,11 @@
-import React, { useState } from 'react';
 
 import MyLocationIcon from '@mui/icons-material/MyLocation';
+import useHome from './useHome';
 
 const Home = () => {
-  const [pickupLocation, setPickupLocation] = useState('');
-  const [destination, setDestination] = useState('');
-  const [location , setLocation] = useState<[number,number]|null>(null);
 
-  const handlePickupChange = (e :React.ChangeEvent<HTMLInputElement>) => {
-    setPickupLocation(e.target.value);
-  };
-
-  const handleDestinationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDestination(e.target.value);
-  };
-
-  const handleGetCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation([latitude, longitude]);
-        },
-        (error) => {
-          console.error("Error getting location: ", error);
-          alert("Failed to retrieve location. Please ensure GPS is enabled.");
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by your browser.");
-    }
-  };
-  
+  const { pickupLocation,handlePickupChange, destination, handleDestinationChange, handleGetCurrentLocation } = useHome();
+ 
 
   return (
     <div className="flex  justify-center items-center md:flex-row w-[90%] ">
@@ -74,13 +48,7 @@ const Home = () => {
           />
         </div>
       </div>
-      {/* <div className="md:w-1/2 h-96 p-4">
-        {location ? (
-          <Map center={{ lat: location[0], lng: location[1] }} />
-        ) : (
-          <p className="text-gray-500">Location not available</p>
-        )}
-      </div> */}
+     
  
     </div>
   );
