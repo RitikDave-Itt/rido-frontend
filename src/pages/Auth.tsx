@@ -33,7 +33,7 @@ const Auth: React.FC = () => {
           </button>
         </div>
         <div className=" flex justify-center items-center mt-4 h-[90%] ">
-          {activeTab === 'login' ? <div className='h-full w-full flex items-center'><Login /></div> : <Signup />}
+          {activeTab === 'login' ? <div className='h-full w-full flex '><Login /></div> : <Signup />}
         </div>
       </div>
 

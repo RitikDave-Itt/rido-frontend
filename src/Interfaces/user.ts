@@ -18,5 +18,8 @@ export interface IUser{
         user: IUser | null;
         loading: boolean;
         error: string | null;
+        accessToken: string | null;
+        refreshToken: string | null;
+        isLoggedIn: boolean;
       }
       

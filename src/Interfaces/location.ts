@@ -25,3 +25,10 @@ export interface Ilocation{
     longitude:string;
 
 }
+
+export interface INearbyLocation {
+  name: string|null;
+  latitude: string;
+  longitude: string;
+  type: string|null;
+}

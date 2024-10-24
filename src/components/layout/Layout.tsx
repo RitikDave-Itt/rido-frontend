@@ -2,16 +2,18 @@ import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-const Layout = ({ children }:{children: React.ReactNode}) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
-        
-      <Navbar />
-      <main className="flex flex-grow bg-background-light h-full justify-center ">
-          {children}
+    <div className="relative flex flex-col h-[100vh] w-[100vw] overflow-y-auto ">
+      <header>
+        <Navbar />
+      </header>
+      <main className=" flex-grow bg-background-light ">
+        {children}
+
       </main>
       <Footer />
- 
+
     </div>
   );
 };

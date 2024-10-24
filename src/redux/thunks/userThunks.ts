@@ -1,10 +1,8 @@
-import { stringify } from './../../../node_modules/postcss/lib/postcss.d';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setLoading, setError, setUser } from "@/redux/slices/userSlice";
+import { setLoading, setError, setUser,  setIsLoggedIn } from "@/redux/slices/userSlice";
 import { IUser } from "@/Interfaces/user";
 import Cookies from "js-cookie";
-import { json } from 'stream/consumers';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -45,11 +43,13 @@ export const loginUser = createAsyncThunk(
         sameSite: "None",
         expires: 7,
       });
+
       Cookies.set("user", JSON.stringify(response.data.user), {
         secure: true,
         sameSite: "None",
         expires: 7,
       });
+      dispatch(setIsLoggedIn(true));
 
 
       return response.data;

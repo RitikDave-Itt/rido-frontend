@@ -42,11 +42,11 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && (
+      {/* {isModalOpen && ( */}
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <Auth /> 
         </Modal>
-      )}
+      {/* )} */}
     </nav>
   );
 };
