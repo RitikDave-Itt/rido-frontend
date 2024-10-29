@@ -16,6 +16,7 @@ const useLogin = () => {
             
             await dispatch(loginUser({ email, password })).unwrap();
             toast.success('Login successful!');
+            
         } catch (error) {
             
             console.error('Login failed:', error);

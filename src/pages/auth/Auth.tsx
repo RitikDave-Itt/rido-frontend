@@ -1,5 +1,5 @@
-import Login from '@/components/login/Login';
-import Signup from '@/components/signup/Signup';
+import Login from '@/pages/auth/components/login/Login';
+import Signup from '@/pages/auth/components/signup/Signup';
 import React, { useState } from 'react';
 
 
@@ -13,7 +13,7 @@ const Auth: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row bg-background-light p-6 rounded-lg shadow-md w-full max-w-4xl mx-auto h-[80%] ">
       
-      <div className='md:w-3/4 w-full'>
+      <div className='md:w-3/4 w-full overflow-y-auto'>
         <div className="flex justify-between ">
           <button
             onClick={() => handleTabChange('login')}
@@ -33,13 +33,18 @@ const Auth: React.FC = () => {
           </button>
         </div>
         <div className=" flex justify-center items-center mt-4 h-[90%] ">
-          {activeTab === 'login' ? <div className='h-full w-full flex '><Login /></div> : <Signup />}
+          {activeTab === 'login' ? <div className='h-full w-full flex '><Login /></div> : <div className='h-full w-full flex '><Signup /></div> }
         </div>
       </div>
 
       <div className="hidden md:flex md:w-1/2 justify-center items-center p-4">
-        <img src="/images/auth.gif" alt="Auth Illustration" className="rounded-lg w-full h-full object-cover" />
-      </div>
+  <img
+    src="/images/auth2.gif"
+    alt="Auth Illustration"
+    className="rounded-lg w-full h-full object-contain"
+  />
+</div>
+
       
     </div>
   );

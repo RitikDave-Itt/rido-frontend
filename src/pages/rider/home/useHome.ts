@@ -1,21 +1,27 @@
-import { vehicleData } from "@/data/fareListVehicleData";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { VehicleType } from '../../../Interfaces/ride';
+import React, { useEffect, useRef, useState } from "react";
 import { IAddressResponse, INearbyLocation } from "@/Interfaces/location";
 import { setLoading } from "@/redux/slices/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import { getAddress, getNearbyAddress } from "@/Service/locationService";
-import { IFareList } from "@/Interfaces/ride";
+import { IFareList, ISelectedVehicle } from "@/Interfaces/ride";
 import { getFareList } from "@/Service/rideServices";
 import { toast } from "react-toastify";
+import { requestRide } from '@/redux/thunks/rideThunks';
+import { useNavigate } from 'react-router-dom';
+import { getGeoLocationCords } from '@/utils/getGeoLocationCords';
+
 
 const useHome = () => {
+  const navigate = useNavigate();
+
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch<AppDispatch>();
   const [pickupLocationInput, setPickupLocationInput] = useState("");
   const [destinationInput, setDestinationInput] = useState("");
-  const [location, setLocation] = useState<[number, number] | null>(null);
+  const [location, setLocation] = useState<[string,string] | null>(null);
   const [addressData, setAddressData] = useState<IAddressResponse | null>(null);
   const loading = useSelector((state: RootState) => state.loading.loading);
   const [nearbyPlaces, setNearbyPlaces] = useState<INearbyLocation[]>([]);
@@ -23,7 +29,7 @@ const useHome = () => {
   const [pickupLocation, setPickupLocation] = useState<INearbyLocation | null>(
     null
   );
-  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<ISelectedVehicle | null>(null);
   const [isConfirmRideOpen, setIsConfirmRideOpen] = useState<boolean>(false);
 
   const [activeInput, setActiveInput] = useState<
@@ -32,11 +38,11 @@ const useHome = () => {
 
   const [fareList, setFareList] = useState<IFareList | null>(null);
 
-  const handleSelectVehicleType = (type: string) => {
-    setSelectedVehicle(selectedVehicle === type ? null : type);
-  };
 
-  const handleCurrentLocationPickup = () => {
+
+
+
+  const handleCurrentLocationPickup = async () => {
     if (addressData && location) {
       setPickupLocation({
         name: addressData.displayName,
@@ -70,26 +76,18 @@ const useHome = () => {
   const fetchAddressDataOnce = async () => {
     dispatch(setLoading(true));
     try {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            setLocation([latitude, longitude]);
-
-            const response = await getAddress(
-              latitude.toString(),
-              longitude.toString()
-            );
-            setAddressData(response);
-            setPickupLocationInput(response.displayName);
-          },
-          (error) => {
-            console.error("Error getting location:", error);
-            alert("Failed to retrieve location. Please ensure GPS is enabled.");
-          }
+      const currentLocationPoint = await getGeoLocationCords();
+      setLocation(currentLocationPoint); 
+  
+      
+      if (currentLocationPoint) {
+        const response = await getAddress(
+          currentLocationPoint[0], 
+          currentLocationPoint[1]  
         );
-      } else {
-        alert("Geolocation is not supported by your browser.");
+  
+        setAddressData(response);
+        setPickupLocationInput(response.displayName);
       }
     } catch (error) {
       console.error("Error fetching address data:", error);
@@ -97,6 +95,7 @@ const useHome = () => {
       dispatch(setLoading(false));
     }
   };
+  
 
   const fetchNearbyPlaces = async (type: "pickup" | "destination") => {
     if (addressData) {
@@ -163,26 +162,60 @@ const useHome = () => {
         `${pickupLocation?.latitude.toString()},${pickupLocation?.longitude.toString()}`,
         `${destination?.latitude},${destination?.longitude}`
       );
-
+      
+      console.log(response);
       setFareList(response);
     } catch (error) {
       console.error(error);
     }
   };
-  const handleSelectVehicle = useCallback((vehicle: string) => {
-    console.log("handle v call hua hau");
-    setSelectedVehicle(vehicle); 
-    setIsConfirmRideOpen(true); 
-  },[]);
-
+  const handleSelectVehicle = 
+    (vehicle: VehicleType, fare: number, estimatedTime: string | null) => {
+      setSelectedVehicle({
+        vehicle,
+        price: fare,
+        estimatedTime
+      });
+    }
+  
   useEffect(()=>{
     if(selectedVehicle){
       setIsConfirmRideOpen(true);
     }
   },[selectedVehicle]);
 
-  const handleConfirmRideRequest = () => {
-    console.log("rideRequest confirmed");
+  const handleConfirmRideRequest = async () => {
+    if(destination && pickupLocation && selectedVehicle){
+
+    try {
+      
+      const resultAction = await dispatch(requestRide(
+        {destinationAddress:destination?.name,
+        destinationLatitude:destination?.latitude,
+        destinationLongitude:destination?.longitude,
+        pickupAddress:pickupLocation?.name,
+        pickupLatitude:pickupLocation?.latitude,
+        pickupLongitude:pickupLocation?.longitude,
+        vehicleType:selectedVehicle?.vehicle,
+        pickupTime:new Date().toISOString()
+      
+      }));
+    
+      
+      if (requestRide.fulfilled.match(resultAction)) {
+        
+        toast.success("Ride request successful");
+        navigate("/ride-request-waiting"); 
+
+      } else {
+        
+        toast.error("Ride request failed:");
+      }
+    } catch (error) {
+      
+      toast.error("An error occurred:");
+    }
+  }
   };
 
   return {
@@ -209,7 +242,7 @@ const useHome = () => {
     setActiveInput,
     fareList,
     handleGetFareList,
-    handleSelectVehicleType,
+    
     setSelectedVehicle,
     selectedVehicle,
     handleConfirmRideRequest,

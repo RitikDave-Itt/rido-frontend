@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import axiosRequest from '../../common/request';
+import axiosRequest from '../../../../common/request';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '@/redux/slices/loadingSlice';
@@ -25,6 +25,7 @@ const useSignup = () => {
         vehicleModel: '',
         vehicleMake: '',
         vehicleRegistrationNumber: '',
+        vehicleType:""
       });
     
       const [currentStep, setCurrentStep] = useState(1);
@@ -63,6 +64,7 @@ const useSignup = () => {
                   gender: formData.gender,
                   role: formData.role,
                   ...(formData.role === 'driver' && {
+                    vehicleType :formData.vehicleType,
                     licenseType: formData.licenseType,
                     licenseNumber: formData.licenseNumber,
                     vehicleModel: formData.vehicleModel,

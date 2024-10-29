@@ -4,32 +4,33 @@ import SearchIcon from '@mui/icons-material/Search';
 import FareList from './components/FareList';
 import ConfirmRideRequest from './components/ConfirmRideRequest';
 import Modal from '@/components/Modal';
-import { useEffect, useState } from 'react';
 
 const Home = () => {
   const {
     pickupLocationInput,
     destinationInput,
-    fetchNearbyPlaces,
     handlePickupChange,
     nearbyPlaces,
-    handleCurrentLocationPickup,
+    wrapperRef,
     handleDestinationChange,
+    destination,
+    fetchNearbyPlaces,
+    pickupLocation,
+    handleCurrentLocationPickup,
     handleLocationSelection,
     activeInput,
-    wrapperRef,
     setActiveInput,
     fareList,
     handleGetFareList,
+ 
     selectedVehicle,
-    pickupLocation,
+    handleConfirmRideRequest,
     isConfirmRideOpen,
     setIsConfirmRideOpen,
-    destination  } = useHome();
+    handleSelectVehicle  } = useHome();
 
    
 
-console.log(pickupLocation,"ritik")
   return (
     <div className="flex flex-col md:flex-row justify-evenly mt-4 w-[95%] h-full ">
       <div className=" flex flex-col items-center  p-4 h-full md:w-1/2 w-full " ref={wrapperRef}>
@@ -47,19 +48,20 @@ console.log(pickupLocation,"ritik")
                 value={pickupLocationInput}
                 onChange={handlePickupChange}
                 onFocus={() => setActiveInput("pickup")}
-                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary"
+                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(pickupLocation!=null)?'border-blue-500':'border-gray-300'}`}
                 placeholder="Enter pickup location"
               />
               <button
                 onClick={() => fetchNearbyPlaces("pickup")}
-                className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center"
+                className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center hover:bg-primary_hover"
                 title="Search pickup location"
+                
               >
                 <SearchIcon />
               </button>
               <button
                 onClick={handleCurrentLocationPickup}
-                className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center"
+                className="hover:bg-primary_hover mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center"
                 title="Get current location"
               >
                 <MyLocationIcon />
@@ -92,12 +94,12 @@ console.log(pickupLocation,"ritik")
                 value={destinationInput}
                 onChange={handleDestinationChange}
                 onFocus={() => setActiveInput("destination")}
-                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary"
+                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(destination!=null)?'border-blue-500':'border-gray-300'}`}
                 placeholder="Enter destination"
               />
               <button
                 onClick={() => fetchNearbyPlaces("destination")}
-                className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center"
+                className="hover:bg-primary_hover mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center"
                 title="Search destination"
               >
                 <SearchIcon />
@@ -141,15 +143,14 @@ console.log(pickupLocation,"ritik")
 }
 
 {selectedVehicle&&<div>
-  {selectedVehicle}
   </div>}
 
       </div>
       <div className='md:w-1/2 w-full'>
-        {fareList ? <FareList fareList={fareList} /> :
+        {fareList ? <FareList fareList={fareList} selectedVehicle={ selectedVehicle} handleSelectVehicle={handleSelectVehicle} /> :
 
-          <div className=" flex items-center justify-center h-full ">
-            <img src="/images/taxi.gif" alt="" />
+          <div className=" flex items-center justify-center h-full w-full ">
+            <img src="/images/taxi2.gif" alt="" />
           </div>
 
         }</div>
@@ -157,10 +158,22 @@ console.log(pickupLocation,"ritik")
      
         {isConfirmRideOpen && (
       <Modal
-        isOpen={isConfirmRideOpen}  // or whatever prop your modal requires
+        isOpen={isConfirmRideOpen}  
         onClose={() => setIsConfirmRideOpen(false)}
       >
-        <ConfirmRideRequest isconfirmed/>
+        <ConfirmRideRequest 
+         pickupLocation={pickupLocation!.name!}
+         destination={destination!.name!}
+         selectedVehicle={selectedVehicle!.vehicle!}
+         fare={selectedVehicle!.price!}
+         onConfirm={handleConfirmRideRequest}
+         onCancel={() => setIsConfirmRideOpen(false)
+          
+
+
+         }
+         
+        />
       </Modal>
     )}
 

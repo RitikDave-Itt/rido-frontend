@@ -19,7 +19,7 @@ const Signup: React.FC = () => {
       <h2 className="text-2xl font-bold text-primary mb-3">Signup</h2>
      {loading&& <LinearProgress />}
 
-      <form onSubmit={handleSubmit} className="mt-5 overflow-y-auto h-[80%] w-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+      <form onSubmit={handleSubmit} className="mt-5  h-[80%] w-full scrollbar-thin ">
         {currentStep === 1 && (
           <div className=' w-full'>
             <Input
@@ -104,6 +104,24 @@ const Signup: React.FC = () => {
         {currentStep === 2 && formData.role === 'driver' && (
           <div>
             <h3 className="text-xl font-bold mb-4">Driver Details</h3>
+            <div className="mb-4">
+      <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-2">Vehicle Type</label>
+      <select
+        name="vehicleType"
+        value={formData.vehicleType}
+        onChange={handleChange}
+        required={true}
+        className="block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary"
+      >
+        <option value="" disabled>Select Vehicle Type</option>
+        <option value="bike">Bike</option>
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="coupe">Coupe</option>
+        <option value="van">Van</option>
+        <option value="autoRikshaw">Auto Rikshaw</option>
+      </select>
+    </div>
             <Input
               type="text"
               name = "licenseType"

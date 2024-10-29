@@ -25,7 +25,7 @@ export const vehicleData = [
       tagline: 'Perfect for groups',
     },
     {
-      type: 'Auto Rikshaw',
+      type: 'AutoRikshaw',
       image: '/images/auto.jpg',
       tagline: 'Economical and easy',
     },

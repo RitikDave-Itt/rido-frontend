@@ -9,6 +9,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: IUserState = {
   user: null,
   loading: false,
+  wallet:null,
+  
   error: null,
   accessToken: null,
   refreshToken: null,
@@ -41,11 +43,14 @@ const userSlice = createSlice({
     setIsLoggedIn(state, action: PayloadAction<boolean>) {
       state.isLoggedIn = action.payload;
     },
+   setWallet(state, action: PayloadAction<IUserState['wallet']>) {
+    state.wallet = action.payload; 
+  }
     
    
   },
 });
 
 
-export const { setUser, clearUser, setLoading, setError, setAccessToken, setRefreshToken ,setIsLoggedIn} = userSlice.actions;
+export const { setUser, clearUser, setLoading, setError, setAccessToken, setRefreshToken ,setIsLoggedIn,setWallet} = userSlice.actions;
 export default userSlice.reducer;

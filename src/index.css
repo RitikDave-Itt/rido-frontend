@@ -51,7 +51,7 @@ body{
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary-color);
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -60,6 +60,6 @@ body{
 
 
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--bg-color-medium);
+  scrollbar-width: ultra-thin;
+  /* scrollbar-color: var(--primary-color) var(--bg-color-medium); */
 }

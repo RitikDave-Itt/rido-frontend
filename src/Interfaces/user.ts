@@ -1,3 +1,4 @@
+import { VehicleType } from './ride';
 
 export interface IUser{
     
@@ -7,6 +8,8 @@ export interface IUser{
         phoneNumber: string;
         gender: string;
         role: string;
+       
+        vehicleType?:VehicleType
         licenseType?: string;  
         licenseNumber?: string; 
         vehicleModel?: string;  
@@ -17,9 +20,13 @@ export interface IUser{
     export  interface IUserState {
         user: IUser | null;
         loading: boolean;
+        wallet:IWallet|null;
         error: string | null;
         accessToken: string | null;
         refreshToken: string | null;
         isLoggedIn: boolean;
       }
-      
+export interface IWallet{
+    balance:number,
+    status: "Active"|"Suspended"|"Closed"
+}
