@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useDriverDetail from './useDriverDetail';
 
 
@@ -6,8 +6,6 @@ const DriverDetail: React.FC = () => {
   const {
     driver,
     rideData,
-    isModalOpen,
-    setIsModalOpen,
     makePayment
   } = useDriverDetail();
  

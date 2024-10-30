@@ -27,12 +27,17 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        const refreshToken = Cookies.get('refreshToken');
+        if (!refreshToken) {
+          return;
+        }
+
         const { data } = await axios.post(
           `${BASEURL}/auth/refresh-token`, 
           {},
           {
             headers: {
-              Authorization: `Bearer ${Cookies.get('refreshToken')}`,
+              Authorization: `Bearer ${refreshToken}`,
             },
           }
         );

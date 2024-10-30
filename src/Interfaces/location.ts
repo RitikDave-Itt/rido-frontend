@@ -27,7 +27,7 @@ export interface Ilocation{
 }
 
 export interface INearbyLocation {
-  name: string|null;
+  name: string;
   latitude: string;
   longitude: string;
   type: string|null;

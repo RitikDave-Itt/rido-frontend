@@ -28,7 +28,7 @@ const AllRoutes = () => {
       if (user?.role === "Driver") {
         if (driveStatus === "Accepted" || driveStatus==="InProgress") {
           navigate("/driver/start-ride");
-        } else if (driveStatus == "Completed") {
+        } else if (driveStatus == "Unpaid") {
           navigate("/payment-wait");
         }
       } else {
@@ -37,7 +37,7 @@ const AllRoutes = () => {
         } else if (rideStatus === "Accepted"||rideStatus==="InProgress") {
           navigate("/driver-detail");
         }
-        else if(rideStatus==="Completed"){
+        else if(rideStatus==="Unpaid"){
           navigate("/payment-review")
         }
        
@@ -104,7 +104,7 @@ const AllRoutes = () => {
         path="/payment-review"
         element={
           <Layout>
-            <ProtectedRoute condition={rideStatus === "Completed"}>
+            <ProtectedRoute condition={rideStatus === "Unpaid"||rideStatus==="Completed"}>
 
             <RidePaymentAndReview />
             </ProtectedRoute>
@@ -123,7 +123,7 @@ const AllRoutes = () => {
         path="/payment-wait"
         element={
           <Layout>
-            <ProtectedRoute condition={driveStatus === "Completed"}>
+            <ProtectedRoute condition={driveStatus === "Unpaid"||driveStatus==="Completed"}>
             <PaymentWait />
             </ProtectedRoute>
 

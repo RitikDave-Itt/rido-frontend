@@ -1,4 +1,4 @@
-import {  IHistory } from './../Interfaces/history';
+import { BookingResponseForRider, IHistory } from './../Interfaces/history';
 import axiosRequest from "@/common/request";
 
 export const fetchHistoryData = async (pageNo: number, pageSize: number = 10):Promise<{ items: IHistory[]; totalCount: number }> => {
@@ -21,3 +21,23 @@ export const fetchHistoryData = async (pageNo: number, pageSize: number = 10):Pr
     };
   }
 };
+
+
+export const fetchBookingById = async (rideRequestId:string):Promise<BookingResponseForRider|null> => {
+  try {
+    const response = await axiosRequest({
+      route: `/bookings/get-by-id/${rideRequestId}`,
+      method: 'GET',
+    });
+
+    return {
+      bookingData: response.data.bookingData,
+      driver: response.data?.driver,
+    };
+  } catch (error) {
+    console.error(error);
+    
+    return null;
+  }
+};
+

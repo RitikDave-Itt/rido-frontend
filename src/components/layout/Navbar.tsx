@@ -45,10 +45,16 @@ const Navbar = () => {
           <div className="flex items-center">
             {user ? (
               <>
-                <Avatar 
-                  className="cursor-pointer"
+                              <p className='text-white mr-3'> {user.firstName}</p>
+
+              <div className=' cursor-pointer w-[40px] aspect-square rounded-full overflow-hidden hover:scale-100' >
+                <img 
+                  src="/images/avatar.jfif"
+
+                  className=" scale-125 "
                   onClick={handleMenuOpen} 
                 />
+                </div>
                 <Menu
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}

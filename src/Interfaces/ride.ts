@@ -37,7 +37,7 @@ export interface IFareDetails {
     pickupAddress: string;
     pickupLatitude: string;
     pickupLongitude: string;
-    vehicleType: number;
+    vehicleType: string;
     pickupTime: string; 
   }
 
@@ -64,7 +64,7 @@ export interface IRideRequestForRider {
   destinationLatitude: string;        
   destinationLongitude: string;       
   destinationAddress: string;         
-  Price: number;                      
+  price: number;                      
   vehicleType: string;                
   geohashCode: string;                
   distanceInKm: number;               
@@ -73,6 +73,7 @@ export interface IRideRequestForRider {
 export type RideRequestStatus = 
 | 'Requested'
 | 'Accepted'
+|"Unpaid"
 | 'InProgress'
 | 'Completed'
 | 'Canceled'

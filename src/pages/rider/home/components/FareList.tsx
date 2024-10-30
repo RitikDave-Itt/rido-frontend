@@ -4,12 +4,11 @@ import { vehicleData } from '@/data/fareListVehicleData';
 interface PropsType {
   fareList: IFareList|null;
   selectedVehicle: ISelectedVehicle | null;
-  handleSelectVehicle: (vehicleType: string, price: number, estimatedTime: string | null) => void;
+  handleSelectVehicle: any;
 }
 
 
 const FareList = ({ fareList, selectedVehicle, handleSelectVehicle }: PropsType) => {
-  console.log(fareList)
   return (
     <div className="p-4 bg-white rounded-md shadow-md w-full">
       <h2 className="text-xl font-bold mb-4">Fare List</h2>

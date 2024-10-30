@@ -23,8 +23,8 @@ const DriverHome: React.FC = () => {
   } = useDriverHome();
 
   return (
-    <div className="flex flex-col md:flex-row justify-evenly mt-4 w-[95%] h-full bg-background-light">
-      <div className="flex flex-col items-center p-4 h-full md:w-1/2 w-full">
+    <div className="flex flex-col-reverse md:flex-row justify-evenly mt-4 w-[95%] h-full bg-background-light">
+      <div className="flex flex-col items-center p-4 h-full md:w-1/2 w-full ">
         <h2 className="text-2xl font-bold mb-6 w-full">Nearby Rides</h2>
        
 
@@ -80,11 +80,12 @@ const DriverHome: React.FC = () => {
         </div>
       </div>
 
-      <div className="md:w-1/3 md:aspect-square w-full flex items-center justify-center">
-        <img
+      <div className="md:w-1/3  w-full flex justify-center items-center md:flex-col ">
+      <p className="font-bold text-2xl text-gray-500 mb-5 text-center" style={{ fontFamily: "'Georgia', serif" }}>Your Drive, Their Comfort <br/> Ride Safely, Arrive Proudly.</p>
+      <img
           src="/images/homeGif.gif"
           alt="Home"
-          className="object-contain w-full h-full rounded-lg"
+          className="object-contain md:w-1/2 w-1/3"
         />
       </div>
       <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>

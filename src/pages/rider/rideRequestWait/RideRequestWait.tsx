@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 const RideRequestWait = () => {
 
-    const {driver} = useRideRequestWait()
+    const {handleCancelRide} = useRideRequestWait()
     const [progress, setProgress] = useState(0);
 
 
@@ -43,7 +43,11 @@ const RideRequestWait = () => {
      
     </div>
     
-    
+    <button className="mt-9 w-[70%] py-3 bg-red-500 text-white font-semibold rounded-lg border border-red-600 shadow-md transition-transform transform hover:scale-x-105 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
+    onClick={handleCancelRide}
+    >
+    Cancel
+</button>
   </div>
   );
 };

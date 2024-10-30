@@ -1,4 +1,3 @@
-import { Drivestatus } from '@/Interfaces/drive';
 import axiosRequest from "@/common/request";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setDriveStatus } from '../slices/driveSlice';

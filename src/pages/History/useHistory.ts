@@ -25,7 +25,10 @@ const useHistory = () => {
       const result = await fetchHistoryData(page, pageSize); 
       setHistoryList(prevList => [...prevList, ...result.items]); 
       setTotalItems(result.totalCount);
-      setHasMore(page * pageSize < totalItems);
+      const morePagesAvailable = (page * pageSize) < result.totalCount;
+      setHasMore(morePagesAvailable);
+
+      
 
     } catch (err) {
       console.error(err);

@@ -32,6 +32,9 @@ const useHome = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<ISelectedVehicle | null>(null);
   const [isConfirmRideOpen, setIsConfirmRideOpen] = useState<boolean>(false);
 
+  const { user } = useSelector((state: RootState) => state.user);
+
+
   const [activeInput, setActiveInput] = useState<
     "pickup" | "destination" | null
   >(null);
@@ -115,8 +118,10 @@ const useHome = () => {
   };
 
   useEffect(() => {
+    if(user){
     fetchAddressDataOnce();
-  }, []);
+    }
+  }, [user]);
 
   const handlePickupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!activeInput) {
@@ -133,7 +138,7 @@ const useHome = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event:any) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setActiveInput(null);
       }
@@ -211,7 +216,7 @@ const useHome = () => {
         
         toast.error("Ride request failed:");
       }
-    } catch (error) {
+    } catch {
       
       toast.error("An error occurred:");
     }

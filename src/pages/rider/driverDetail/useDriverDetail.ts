@@ -3,7 +3,6 @@ import { checkRideStatus, getRideAndDriverDetail } from '@/redux/thunks/rideThun
 import  { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const useDriverDetail = () => {
     const { driver, rideData } = useSelector((state: RootState) => state.ride);
@@ -23,8 +22,9 @@ const useDriverDetail = () => {
 
     const makePayment = async ()=>{
       try{  
-      dispatch(checkRideStatus());
-        
+       dispatch(checkRideStatus());
+
+  
       }
       catch(error){
         console.log(error)

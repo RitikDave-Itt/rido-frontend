@@ -96,6 +96,30 @@ export const createReview = async (bookingId:string,rating:number,comment:string
 };
 
 
+export const cancelRideByRider = async ()=> {
+
+  try{
+    const response = await axiosRequest(
+      {
+        route:"/ride/cancel-by-rider",
+        method:"PUT"
+      }
+
+    )
+    return response.status==200;
+
+  }
+
+catch(error)  {
+  console.error('Error canceling Ride list:', error);
+  return false
+    
+  }
+}
+
+
+
+
 
 
 

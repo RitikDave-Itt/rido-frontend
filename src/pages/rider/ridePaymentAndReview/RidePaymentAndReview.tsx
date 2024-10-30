@@ -86,12 +86,12 @@ const RidePaymentAndReview = () => {
           <>
                       <h3 className='font-bold text-[1.3rem] text-gray-700'>Deducting from wallet—let's confirm!</h3>
 
-            <div className="text-4xl font-bold text-gray-700 mt-6 p-[10%]">
+            <div className="text-4xl font-bold text-gray-700 mt-6 p-[5%]">
               ₹ {`${rideData?.price ?? '0.00'}`}
             </div>
             <button 
               onClick={createPayment} 
-              className="mt-7 bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary_hover md:w-[60%] w-full"
+              className="mt-3 mb-3 bg-primary text-white py-2 px-6 rounded-lg hover:bg-primary_hover md:w-[60%] w-full"
             >
               Make Payment
             </button>

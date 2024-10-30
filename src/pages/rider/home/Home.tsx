@@ -4,6 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import FareList from './components/FareList';
 import ConfirmRideRequest from './components/ConfirmRideRequest';
 import Modal from '@/components/Modal';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
+
+
 
 const Home = () => {
   const {
@@ -22,14 +27,14 @@ const Home = () => {
     setActiveInput,
     fareList,
     handleGetFareList,
- 
+
     selectedVehicle,
     handleConfirmRideRequest,
     isConfirmRideOpen,
     setIsConfirmRideOpen,
-    handleSelectVehicle  } = useHome();
+    handleSelectVehicle } = useHome();
 
-   
+
 
   return (
     <div className="flex flex-col md:flex-row justify-evenly mt-4 w-[95%] h-full ">
@@ -48,14 +53,14 @@ const Home = () => {
                 value={pickupLocationInput}
                 onChange={handlePickupChange}
                 onFocus={() => setActiveInput("pickup")}
-                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(pickupLocation!=null)?'border-blue-500':'border-gray-300'}`}
+                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(pickupLocation != null) ? 'border-blue-500' : 'border-gray-300'}`}
                 placeholder="Enter pickup location"
               />
               <button
                 onClick={() => fetchNearbyPlaces("pickup")}
                 className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center hover:bg-primary_hover"
                 title="Search pickup location"
-                
+
               >
                 <SearchIcon />
               </button>
@@ -94,7 +99,7 @@ const Home = () => {
                 value={destinationInput}
                 onChange={handleDestinationChange}
                 onFocus={() => setActiveInput("destination")}
-                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(destination!=null)?'border-blue-500':'border-gray-300'}`}
+                className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(destination != null) ? 'border-blue-500' : 'border-gray-300'}`}
                 placeholder="Enter destination"
               />
               <button
@@ -131,54 +136,68 @@ const Home = () => {
             </button>
           </div>
         </div>
-        {pickupLocation&& <div>
+        <div className='w-full flex flex-col'>
+          {pickupLocation && 
+          <div className='w-full mt-4 flex'>
+            <LocationOnIcon />
 
-<p>{pickupLocation.name}</p>
 
-</div>}
-{
-  destination&&<div>
-    {destination.name}
-    </div>
+            <p><span className='text-gray-500 mr-3 ml-1'>Pickup location: </span>{pickupLocation.name}</p>
+
+          </div>
 }
 
-{selectedVehicle&&<div>
-  </div>}
 
-      </div>
-      <div className='md:w-1/2 w-full'>
-        {fareList ? <FareList fareList={fareList} selectedVehicle={ selectedVehicle} handleSelectVehicle={handleSelectVehicle} /> :
+            {
+              destination &&
+              <>
+                <LinearScaleIcon sx={{ transform: "rotate(90deg)" }} />
+                <div className='w-full flex'>
+                  <LocationCityIcon />
 
-          <div className=" flex items-center justify-center h-full w-full ">
-            <img src="/images/taxi2.gif" alt="" />
+                  <p><span className='text-gray-500 mr-3 ml-1'>Destinition location: </span>{destination.name}</p>
+
+                </div></>
+            }
           </div>
 
-        }</div>
-        
-     
+          {selectedVehicle && <div>
+          </div>}
+
+        </div>
+        <div className='md:w-1/2 w-full'>
+          {fareList ? <FareList fareList={fareList} selectedVehicle={selectedVehicle} handleSelectVehicle={handleSelectVehicle} /> :
+
+            <div className="flex items-center justify-center h-full w-full ">
+              <img src="/images/taxi2.gif" alt="" className='w-[75%]' />
+            </div>
+
+          }</div>
+
+
         {isConfirmRideOpen && (
-      <Modal
-        isOpen={isConfirmRideOpen}  
-        onClose={() => setIsConfirmRideOpen(false)}
-      >
-        <ConfirmRideRequest 
-         pickupLocation={pickupLocation!.name!}
-         destination={destination!.name!}
-         selectedVehicle={selectedVehicle!.vehicle!}
-         fare={selectedVehicle!.price!}
-         onConfirm={handleConfirmRideRequest}
-         onCancel={() => setIsConfirmRideOpen(false)
-          
+          <Modal
+            isOpen={isConfirmRideOpen}
+            onClose={() => setIsConfirmRideOpen(false)}
+          >
+            <ConfirmRideRequest
+              pickupLocation={pickupLocation!.name!}
+              destination={destination!.name!}
+              selectedVehicle={selectedVehicle!.vehicle!}
+              fare={selectedVehicle!.price!}
+              onConfirm={handleConfirmRideRequest}
+              onCancel={() => setIsConfirmRideOpen(false)
 
 
-         }
-         
-        />
-      </Modal>
-    )}
 
-    </div>
-  );
+              }
+
+            />
+          </Modal>
+        )}
+
+      </div>
+      );
 };
 
-export default Home;
+      export default Home;
