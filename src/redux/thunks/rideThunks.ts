@@ -1,7 +1,6 @@
 import { IRideRequestDetail } from "@/Interfaces/ride";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosRequest from "@/common/request"; // Import your common axios request function
-
+import axiosRequest from "@/common/request"; 
 export const requestRide = createAsyncThunk(
     'ride/requestRide',
     async (rideDetails: IRideRequestDetail, { rejectWithValue }) => {

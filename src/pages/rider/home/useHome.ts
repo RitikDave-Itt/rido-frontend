@@ -214,7 +214,7 @@ const useHome = () => {
 
       } else {
         
-        toast.error("Ride request failed:");
+        toast.error("");
       }
     } catch {
       
