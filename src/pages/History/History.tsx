@@ -1,8 +1,15 @@
 import HistorySkeleton from "@/components/skeleton/HistorySkeleton";
 import useHistory from "./useHistory";
+import DetailRideBooking from "./components/DetailRideBooking";
 
 const History = () => {
-  const { historyList, loadMore, hasMore ,loading} = useHistory();
+  const { historyList
+    ,loadMore
+    ,hasMore
+    ,loading
+    ,handleSelect
+    ,selectedRideRequest
+  } = useHistory();
 
   if(loading){
     return(
@@ -11,8 +18,8 @@ const History = () => {
   }
 
   return (
-    <div className="flex justify-center p-6 bg-background-light h-full w-full ">
-      <div className="w-full md:w-[60%] ">
+    <div className="flex flex-col-reverse justify-center p-6 bg-background-light h-full w-full md:flex-row ">
+      <div className="w-full md:w-[60%] md:h-full md:overflow-y-auto ">
         <h1 className="w-full text-2xl font-semibold mb-4 text-secondary">
           History
         </h1>
@@ -20,6 +27,7 @@ const History = () => {
           {historyList.map((ride) => (
             <div
               key={ride.id}
+              onClick={() => handleSelect(ride.id)}
               className=" flex p-2 border border-background-medium rounded-lg shadow-sm bg-background-light cursor-pointer hover:bg-gray-100"
             >
               <div className="w-[70%] ml-5">
@@ -86,6 +94,10 @@ const History = () => {
         )}
         </div>
       </div>
+      {
+      <DetailRideBooking selectedRide={selectedRideRequest} />
+}
+
     </div>
   );
 };

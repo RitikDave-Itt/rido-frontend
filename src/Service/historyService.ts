@@ -1,4 +1,4 @@
-import { BookingResponseForRider, IHistory } from './../Interfaces/history';
+import { IHistory } from './../Interfaces/history';
 import axiosRequest from "@/common/request";
 
 export const fetchHistoryData = async (pageNo: number, pageSize: number = 10):Promise<{ items: IHistory[]; totalCount: number }> => {
@@ -23,7 +23,7 @@ export const fetchHistoryData = async (pageNo: number, pageSize: number = 10):Pr
 };
 
 
-export const fetchBookingById = async (rideRequestId:string):Promise<BookingResponseForRider|null> => {
+export const fetchBookingById = async (rideRequestId:string):Promise<any> => {
   try {
     const response = await axiosRequest({
       route: `/bookings/get-by-id/${rideRequestId}`,
@@ -32,7 +32,7 @@ export const fetchBookingById = async (rideRequestId:string):Promise<BookingResp
 
     return {
       bookingData: response.data.bookingData,
-      driver: response.data?.driver,
+      user: response.data?.user,
     };
   } catch (error) {
     console.error(error);

@@ -64,7 +64,7 @@ const Signup: React.FC = () => {
                 onChange={handleChange}
                 className="w-full mt-2 border border-gray-300 rounded-md p-2"
               >
-                <option value="user">User</option>
+                <option value="user">Rider</option>
                 <option value="driver">Driver</option>
               </select>
             </div>

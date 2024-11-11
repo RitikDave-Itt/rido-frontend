@@ -28,9 +28,9 @@ function App() {
   },[refreshToken])
 
   useEffect(()=>{
-    const accessToken = Cookies.get("refreshToken");
-    if(accessToken){
-      setRefreshToken(accessToken)
+    const token = Cookies.get("refreshToken");
+    if(token){
+      setRefreshToken(token)
     }
   },[])
 
@@ -48,7 +48,7 @@ function App() {
 
 <ToastContainer
   position="top-right"
-  autoClose={5000}
+  autoClose={1500}
   hideProgressBar={false}
   newestOnTop={false}
   closeOnClick
@@ -57,7 +57,7 @@ function App() {
   draggable
   pauseOnHover
   theme="light"
-  transition={Bounce} 
+  // transition={} 
 />
 
 

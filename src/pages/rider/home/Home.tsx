@@ -53,6 +53,11 @@ const Home = () => {
                 value={pickupLocationInput}
                 onChange={handlePickupChange}
                 onFocus={() => setActiveInput("pickup")}
+                onKeyDown={(e) => e.key === "Enter" && fetchNearbyPlaces("pickup")}   
+                autoComplete='off'  
+                       
+
+                
                 className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(pickupLocation != null) ? 'border-blue-500' : 'border-gray-300'}`}
                 placeholder="Enter pickup location"
               />
@@ -99,6 +104,7 @@ const Home = () => {
                 value={destinationInput}
                 onChange={handleDestinationChange}
                 onFocus={() => setActiveInput("destination")}
+                onKeyDown={(e) => e.key === "Enter" && fetchNearbyPlaces("destination")}            
                 className={`mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-primary ${(destination != null) ? 'border-blue-500' : 'border-gray-300'}`}
                 placeholder="Enter destination"
               />
@@ -136,7 +142,7 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div className='w-full flex flex-col'>
+        <div className='w-[80%] flex flex-col'>
           {pickupLocation && 
           <div className='w-full mt-4 flex'>
             <LocationOnIcon />

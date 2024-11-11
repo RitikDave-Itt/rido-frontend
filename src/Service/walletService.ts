@@ -45,6 +45,26 @@ export const addWalletMoney = async (amount:number)=> {
   
    
   
+  export const fetchWalletTransactions = async (pageNo: number, pageSize: number = 10):Promise<{ items: any[]; totalCount: number }> => {
+    try {
+      const response = await axiosRequest({
+        route: `/wallet-transaction/all-by-user?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: 'GET',
+      });
+  
+      return {
+        items: response.data?.data || [],
+        totalCount: response.data?.totalItem || 0,
+      };
+    } catch (error) {
+      console.error(error);
+      
+      return {
+          items: [],
+          totalCount: 0,
+      };
+    }
+  };
   
   
   

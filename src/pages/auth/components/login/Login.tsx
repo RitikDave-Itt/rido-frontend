@@ -35,7 +35,7 @@ const Login: React.FC = () => {
           type="submit"
           className="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary_hover w-full"
         >
-          Logins
+          Login
         </button>
       </form>
     </div>

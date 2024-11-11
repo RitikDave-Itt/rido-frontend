@@ -69,7 +69,7 @@ export const checkDriveStatus = createAsyncThunk(
 
   export const verifyOtp = createAsyncThunk(
     'drive/verifyOtp',
-    async ({ rideRequestId, otp }: { rideRequestId: string; otp: string }, {dispatch, rejectWithValue }) => {
+    async ({ rideRequestId, otp }: { rideRequestId: string; otp: string }, { dispatch, rejectWithValue }) => {
       try {
         const response = await axiosRequest({
           route: `/ride/verify-otp`,
@@ -79,16 +79,20 @@ export const checkDriveStatus = createAsyncThunk(
             otp,
           },
         });
-            dispatch(checkDriveStatus());
-        
   
-        return response.status === 200;
+        if (response.status === 200) {
+          dispatch(checkDriveStatus());
+          return true;
+        } else {
+          return false; 
+        }
       } catch (error: any) {
         console.error('Error verifying OTP:', error);
-        return rejectWithValue('Failed to verify OTP');
+        return rejectWithValue(false); 
       }
     }
   );
+  
 
   export const rideCompleted = createAsyncThunk(
     'ride/rideCompleted',

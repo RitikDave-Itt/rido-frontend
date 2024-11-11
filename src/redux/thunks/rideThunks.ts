@@ -47,7 +47,7 @@ export const initializeState = createAsyncThunk(
         route: `/ride/check-status`,
         method: 'GET',
       });
-      if(response.data=="Accepted"||response.data=="Requested"||response.data=="InProgress"){
+      if(response.data=="Accepted"||response.data=="Requested"||response.data=="InProgress"||response.data=="Unpaid"){
         dispatch(getRideAndDriverDetail())}
 
       return response.data;
@@ -69,8 +69,13 @@ export const checkRideStatus = createAsyncThunk(
       });
       
 
-      return response.data;
-    } catch (error: any) {
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        
+        return rejectWithValue(response.data?.message || 'Failed to fetch ride and driver details');
+      } 
+       } catch (error: any) {
      
       console.error('Error fetching ride and driver details:', error);
       return rejectWithValue('Failed to fetch ride and driver details'); 

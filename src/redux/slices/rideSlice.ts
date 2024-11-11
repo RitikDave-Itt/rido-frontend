@@ -1,5 +1,4 @@
-
-
+import { Navigate } from 'react-router-dom';
 import { createSlice } from '@reduxjs/toolkit';
 import { IDriverDetail, IRideRequestForRider, RideRequestStatus } from '@/Interfaces/ride';
 import { checkRideStatus, getRideAndDriverDetail, initializeState, requestRide } from '../thunks/rideThunks';
@@ -64,6 +63,9 @@ const rideSlice = createSlice({
       })
       .addCase(initializeState.fulfilled,(state,action)=>{
         state.rideStatus = action.payload; 
+      })
+      .addCase(checkRideStatus.rejected,()=>{
+        resetRide();  
       })
     
       .addCase(getRideAndDriverDetail.fulfilled, (state, action) => {

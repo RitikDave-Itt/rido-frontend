@@ -1,6 +1,7 @@
-import { setDriveStatus } from '@/redux/slices/driveSlice';
+import { resetDrive } from '@/redux/slices/driveSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { checkRideTransactionStatus, rideCompleted ,verifyOtp} from '@/redux/thunks/driveThunk';
+import {  checkRideTransactionStatus, rideCompleted ,verifyOtp} from '@/redux/thunks/driveThunk';
+import { cancelRideByDriver } from '@/Service/driverService';
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
@@ -16,21 +17,24 @@ const useDriverRideStartPage = () => {
 
     const [otp,setOtp] = useState<string>("");
 
-    const handleVerifyOtp  = async() => {
-        if(acceptedRide){
-
-            const result = await dispatch(verifyOtp({ rideRequestId: acceptedRide.id, otp }));
-            if(result){
-            toast.success("Otp Verified Successfully")
-            dispatch(setDriveStatus(""))
-
-        }
-        else{
-            toast.error("Otp Verification Failed")
-        }
-
+    const handleVerifyOtp = async () => {
+        if (acceptedRide) {
+          try {
+            const resultAction = await dispatch(verifyOtp({ rideRequestId: acceptedRide.id, otp }));
+            const result = resultAction.payload; 
+      
+            if (result === true) {
+              toast.success("OTP Verified Successfully");
+            } else {
+              toast.error("OTP Verification Failed");
+            }
+          } catch (error) {
+            console.error("Error verifying OTP:", error);
+            toast.error("An error occurred while verifying OTP. Please try again.");
+          }
         }
       };
+      
       const handleMapRedirect = () => {
         const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${acceptedRide?.pickupLatitude},${acceptedRide?.pickupLongitude}&destination=${acceptedRide?.destinationLatitude},${acceptedRide?.destinationLongitude}`;
         window.open(googleMapsUrl, '_blank');
@@ -48,6 +52,18 @@ const useDriverRideStartPage = () => {
             toast.error("Ride Completion Failed")
         }
     } 
+
+    const handleCancel = async()=>{
+      const result = await cancelRideByDriver();
+      if(result){
+        toast.success("Ride Canceled Successfully");
+        dispatch(resetDrive());
+        navigate("/")
+      }
+      else{
+        toast.error("Ride Cancellation Failed");
+      }
+    }
     
   return (
     {
@@ -59,7 +75,8 @@ const useDriverRideStartPage = () => {
         handleVerifyOtp,
         handleMapRedirect,
         driveStatus,
-        handleRideCompleted
+        handleRideCompleted,
+        handleCancel
         
     }
   )

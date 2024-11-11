@@ -1,5 +1,5 @@
 import { IHistory } from '@/Interfaces/history';
-import { fetchHistoryData } from '@/Service/historyService';
+import { fetchBookingById, fetchHistoryData } from '@/Service/historyService';
 import{ useEffect, useState } from 'react';
 
 const useHistory = () => {
@@ -8,6 +8,7 @@ const useHistory = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore,setHasMore] = useState(true);
+  const [selectedRideRequest, setSelectedRideRequest] = useState<any>(null)
   const pageSize = 10;
 
   const loadMore = () => {
@@ -15,6 +16,20 @@ const useHistory = () => {
         setPage((prevPage) => prevPage + 1);
       }
   
+  };
+
+  const handleSelect = async (rideId: string) => {
+    setLoading(true);
+
+    try {
+      
+      const bookingDetails = await fetchBookingById(rideId);
+      setSelectedRideRequest(bookingDetails); 
+    } catch (err) {
+      console.error('Error fetching booking details:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   
@@ -28,7 +43,9 @@ const useHistory = () => {
       const morePagesAvailable = (page * pageSize) < result.totalCount;
       setHasMore(morePagesAvailable);
 
-      
+      if (page === 1 && result.items.length > 0) {
+        handleSelect(result.items[0].id); 
+      }
 
     } catch (err) {
       console.error(err);
@@ -48,7 +65,11 @@ const useHistory = () => {
     page,
     setPage,
     loadMore,
-    hasMore
+    hasMore,
+    selectedRideRequest,
+    setSelectedRideRequest,
+    handleSelect,
+    setLoading,
   };
 };
 

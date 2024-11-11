@@ -13,20 +13,25 @@ import History from "@/pages/History/History";
 import PaymentWait from "@/pages/driver/paymentWait/PaymentWait";
 import Wallet from "@/pages/wallet/Wallet";
 import ProtectedRoute from "./ProtectedRoute";
+import About from "@/pages/about/About";
+import Contact from "@/pages/contact/Contact";
+import PrivacyPolicy from "@/pages/privacyPolicy/PrivacyPolicy";
+import NotFound from "@/pages/notFound/NotFound";
+import UserProfile from "@/pages/userProfile/UserProfile";
 
 const AllRoutes = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const { rideStatus } = useSelector((state: RootState) => state.ride);
-  const { driveStatus ,acceptedRide} = useSelector((state: RootState) => state.drive);
+  const { driveStatus, acceptedRide } = useSelector((state: RootState) => state.drive);
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
-  
+
   useEffect(() => {
-    
-    if (location.pathname === "/"||location.pathname==="/driver-home") {
+
+    if (location.pathname === "/" || location.pathname === "/driver-home") {
       if (user?.role === "Driver") {
-        if (driveStatus === "Accepted" || driveStatus==="InProgress") {
+        if (driveStatus === "Accepted" || driveStatus === "InProgress") {
           navigate("/driver/start-ride");
         } else if (driveStatus == "Unpaid") {
           navigate("/payment-wait");
@@ -34,19 +39,19 @@ const AllRoutes = () => {
       } else {
         if (rideStatus === "Requested") {
           navigate("/ride-request-waiting");
-        } else if (rideStatus === "Accepted"||rideStatus==="InProgress") {
+        } else if (rideStatus === "Accepted" || rideStatus === "InProgress") {
           navigate("/driver-detail");
         }
-        else if(rideStatus==="Unpaid"){
+        else if (rideStatus === "Unpaid") {
           navigate("/payment-review")
         }
-       
-        else{
+
+        else {
           navigate("/")
         }
       }
     }
-  }, [user, driveStatus, rideStatus, navigate, location.pathname,acceptedRide]); 
+  }, [user, driveStatus, rideStatus, navigate, location.pathname, acceptedRide]);
 
   return (
     <Routes>
@@ -54,9 +59,9 @@ const AllRoutes = () => {
         path="/"
         element={
           <Layout>
-            {user?.role === "Driver" ? 
-                <DriverHome />
-             :
+            {user?.role === "Driver" ?
+              <DriverHome />
+              :
               <Home />
             }
           </Layout>
@@ -67,7 +72,7 @@ const AllRoutes = () => {
         element={
           <Layout>
             <ProtectedRoute condition={rideStatus === "Requested"}>
-            <RideRequestWait />
+              <RideRequestWait />
             </ProtectedRoute>
           </Layout>
         }
@@ -76,8 +81,8 @@ const AllRoutes = () => {
         path="/driver-detail"
         element={
           <Layout>
-            <ProtectedRoute condition={rideStatus==="Accepted"||rideStatus==="InProgress"}>
-            <DriverDetail />
+            <ProtectedRoute condition={rideStatus === "Accepted" || rideStatus === "InProgress"}>
+              <DriverDetail />
             </ProtectedRoute>
           </Layout>
         }
@@ -94,8 +99,8 @@ const AllRoutes = () => {
         path="/driver/start-ride"
         element={
           <Layout>
-            <ProtectedRoute condition={driveStatus=== "Accepted"||driveStatus==="InProgress"}>
-            <DriverRideStartPage />
+            <ProtectedRoute condition={driveStatus === "Accepted" || driveStatus === "InProgress"}>
+              <DriverRideStartPage />
             </ProtectedRoute>
           </Layout>
         }
@@ -104,9 +109,9 @@ const AllRoutes = () => {
         path="/payment-review"
         element={
           <Layout>
-            <ProtectedRoute condition={rideStatus === "Unpaid"||rideStatus==="Completed"}>
+            <ProtectedRoute condition={rideStatus === "Unpaid" || rideStatus === "Completed"}>
 
-            <RidePaymentAndReview />
+              <RidePaymentAndReview />
             </ProtectedRoute>
           </Layout>
         }
@@ -119,22 +124,61 @@ const AllRoutes = () => {
           </Layout>
         }
       />
-       <Route
+      <Route
         path="/payment-wait"
         element={
           <Layout>
-            <ProtectedRoute condition={driveStatus === "Unpaid"||driveStatus==="Completed"}>
-            <PaymentWait />
+            <ProtectedRoute condition={driveStatus === "Unpaid" || driveStatus === "Completed"}>
+              <PaymentWait />
             </ProtectedRoute>
 
           </Layout>
         }
       />
-         <Route
+      <Route
         path="/wallet"
         element={
           <Layout>
             <Wallet />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/about"
+        element={
+          <Layout>
+            <About />
+          </Layout>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <Layout>
+            <Contact />
+          </Layout>
+        }
+      />
+       <Route
+        path="/privacy-policy"
+        element={
+          <Layout>
+            <PrivacyPolicy />
+          </Layout>
+        }
+      />
+       <Route
+        path="/*"
+        element={
+          <NotFound/>
+        }
+      />
+         <Route
+        path="/profile"
+        element={
+          <Layout>
+            <UserProfile />
           </Layout>
         }
       />

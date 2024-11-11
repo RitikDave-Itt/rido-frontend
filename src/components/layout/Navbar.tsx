@@ -36,7 +36,7 @@ const Navbar = () => {
               History
             </Link>
             <Link
-              to="/"
+              to="/about"
               className="flex justify-center items-center text-white hover:text-primary border-b-2 border-transparent hover:border-primary h-[80%]"
             >
               About
@@ -77,7 +77,7 @@ const Navbar = () => {
                 className=" py-1 px-5 rounded-md text-xl text-white bg-primary hover:bg-primary_hover"
                 
               >
-                SignIn
+                Log In / Sign Up
               </button>
             )}
           </div>

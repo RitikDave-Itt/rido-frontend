@@ -1,5 +1,5 @@
 import { VehicleType } from '../../../Interfaces/ride';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IAddressResponse, INearbyLocation } from "@/Interfaces/location";
 import { setLoading } from "@/redux/slices/loadingSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,7 +45,7 @@ const useHome = () => {
 
 
 
-  const handleCurrentLocationPickup = async () => {
+  const handleCurrentLocationPickup = useCallback( async () => {
     if (addressData && location) {
       setPickupLocation({
         name: addressData.displayName,
@@ -55,9 +55,9 @@ const useHome = () => {
       });
       setPickupLocationInput(addressData.displayName);
     }
-  };
+  },[addressData,location])
 
-  const handleLocationSelection = (
+  const handleLocationSelection = useCallback( (
     selection: INearbyLocation,
     type: "pickup" | "destination"
   ) => {
@@ -74,7 +74,7 @@ const useHome = () => {
     }
 
     setNearbyPlaces([]);
-  };
+  },[nearbyPlaces]);
 
   const fetchAddressDataOnce = async () => {
     dispatch(setLoading(true));
@@ -151,7 +151,7 @@ const useHome = () => {
     };
   }, [setActiveInput]);
 
-  const handleGetFareList = async () => {
+  const handleGetFareList = useCallback( async () => {
     if (!pickupLocation) {
       toast.warning("Please select a pickup location");
       return;
@@ -173,15 +173,16 @@ const useHome = () => {
     } catch (error) {
       console.error(error);
     }
-  };
-  const handleSelectVehicle = 
+  },[fareList,pickupLocation,destination]);
+
+  const handleSelectVehicle = useCallback(
     (vehicle: VehicleType, fare: number, estimatedTime: string | null) => {
       setSelectedVehicle({
         vehicle,
         price: fare,
         estimatedTime
       });
-    }
+    },[setSelectedVehicle])
   
   useEffect(()=>{
     if(selectedVehicle){

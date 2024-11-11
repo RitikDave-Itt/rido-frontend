@@ -8,7 +8,8 @@ export const getGeoLocationCords = async (): Promise<[string, string]> => {
           const latitude = "26.945700";
           const longitude = "75.777313";
           resolve([latitude, longitude]);
-        } else if (navigator.geolocation) {
+        } 
+        else if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
               const { latitude, longitude } = position.coords;

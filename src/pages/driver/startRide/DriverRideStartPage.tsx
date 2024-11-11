@@ -3,8 +3,16 @@ import { format } from "date-fns";
 import Input from "@/components/ui/Input";
 
 const DriverRideStartPage = () => {
-  const { acceptedRide, otp, setOtp, handleVerifyOtp, handleMapRedirect,driveStatus,handleRideCompleted } =
-    useDriverRideStartPage();
+  const {
+    acceptedRide,
+    otp,
+    setOtp,
+    handleVerifyOtp,
+    handleMapRedirect,
+    driveStatus,
+    handleCancel,
+    handleRideCompleted,
+  } = useDriverRideStartPage();
 
   return (
     <div className="flex flex-col md:flex-row w-full justify-evenly">
@@ -35,7 +43,10 @@ const DriverRideStartPage = () => {
                 </td>
                 <td className="border border-gray-300 p-2">
                   {format(
-                    new Date(acceptedRide?.pickupTime),
+                    new Date(
+                      new Date(acceptedRide?.pickupTime).getTime() +
+                        5.5 * 60 * 60 * 1000
+                    ),
                     "eeee, MMMM do yyyy, h:mm a"
                   )}
                 </td>
@@ -102,7 +113,7 @@ const DriverRideStartPage = () => {
       </div>
       <div className="md:w-[40%] md:flex md:flex-col items-center justify-center md:h-full">
         <div className="w-[40%]">
-            <img src="/images/map.gif" alt="" />
+          <img src="/images/map.gif" alt="" />
         </div>
         <button
           onClick={handleMapRedirect}
@@ -110,34 +121,50 @@ const DriverRideStartPage = () => {
         >
           Navigation On Map
         </button>
-       {driveStatus==="InProgress"&&
-        <button
-        onClick={handleRideCompleted}
-        className="mt-4 bg-primary text-white py-2 px-4 rounded-md hover:bg-primary_hover w-full"
-      >
-          Ride Completed
-      </button>}
-
-        {(driveStatus === "Accepted") &&<div className="flex flex-col w-full items-center mt-4">
-          <h3 className="font-bold w-full text-xl mt-4">Verify Otp</h3>
-          <Input
-            type="tel"
-            name="otp"
-            value={otp}
-            onChange={(e) => {
-              setOtp(e.target.value);
-            }}
-            placeholder="Enter Otp"
-            required={true}
-          />
-
+        {driveStatus === "InProgress" && (
           <button
-            onClick={handleVerifyOtp}
+            onClick={handleRideCompleted}
             className="mt-4 bg-primary text-white py-2 px-4 rounded-md hover:bg-primary_hover w-full"
           >
-            Verify OTP
+            Ride Completed
           </button>
-        </div>}
+        )}
+
+        {driveStatus === "Accepted" && (
+          <div className="flex flex-col w-full items-center mt-4">
+            <h3 className="font-bold w-full text-xl mt-4">Verify Otp</h3>
+            <Input
+              type="tel"
+              name="otp"
+              value={otp}
+              onChange={(e) => {
+                setOtp(e.target.value);
+              }}
+              placeholder="Enter Otp"
+              required={true}
+            />
+
+            <button
+              onClick={handleVerifyOtp}
+              className="mt-4 bg-primary text-white py-2 px-4 rounded-md hover:bg-primary_hover w-full"
+            >
+              Verify OTP
+            </button>
+          </div>
+        )}
+        {
+          driveStatus==="Accepted"&&<>
+          <div className="w-full">
+            <button 
+              className="mt-4 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 w-full"
+              onClick={handleCancel}
+              >
+              Cancel Ride
+            </button>
+
+          </div>
+          </>
+        }
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const AddMoney = () => {
  
 
   return (
-    <div className="flex flex-col  md:w-[40%] h-[70%] justify-center items-center w-full">
+    <div className="flex flex-col  md:w-full h-full   justify-center items-center w-full">
       <h3 className="text-2xl font-semibold mb-4">Add Money To Wallet</h3>
       <Input
       type='number'
