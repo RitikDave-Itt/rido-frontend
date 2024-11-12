@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Input from '@/components/ui/Input';
-import { useNavigate } from 'react-router-dom';
 import { resetRide } from '@/redux/slices/rideSlice';
 
 const RidePaymentAndReview = () => {
@@ -17,7 +16,6 @@ const RidePaymentAndReview = () => {
   const [bookingId , setBookingId] = useState<string>("")
   const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
 
 
   const createPayment = async () => {
@@ -32,7 +30,6 @@ const RidePaymentAndReview = () => {
       }
       else{
         toast.error("Something went wrong");
-        navigate("/")
       }
     } catch (error) {
       console.error(error);
@@ -47,7 +44,6 @@ const RidePaymentAndReview = () => {
         if (result) {
           toast.success("Review submitted successfully!");
           dispatch(resetRide())
-          navigate("/");
           
           
         

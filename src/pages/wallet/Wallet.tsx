@@ -16,7 +16,10 @@ const Wallet = () => {
   return (
     <div className="flex flex-col md:flex-row h-full w-full">
       <div className="md:w-1/3 w-full bg-gray-300 p-4 flex flex-col items-center justify-center">
-        <div className="h-full w-[80%] flex justify-center mt-5">
+      
+        <div className=" flex-col h-full w-[80%] flex justify-center  items-center mt-5">
+        <img src="images/walletAddMoney.png" alt="" className='w-[40%]' />
+
           {isAddMoneyVisible ? <AddMoney /> : <WithdrawMoney />}
         </div>
       </div>

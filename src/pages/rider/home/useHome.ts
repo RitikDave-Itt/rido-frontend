@@ -9,12 +9,10 @@ import { IFareList, ISelectedVehicle } from "@/Interfaces/ride";
 import { getFareList } from "@/Service/rideServices";
 import { toast } from "react-toastify";
 import { requestRide } from '@/redux/thunks/rideThunks';
-import { useNavigate } from 'react-router-dom';
 import { getGeoLocationCords } from '@/utils/getGeoLocationCords';
 
 
 const useHome = () => {
-  const navigate = useNavigate();
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -211,7 +209,6 @@ const useHome = () => {
       if (requestRide.fulfilled.match(resultAction)) {
         
         toast.success("Ride request successful");
-        navigate("/ride-request-waiting"); 
 
       } else {
         

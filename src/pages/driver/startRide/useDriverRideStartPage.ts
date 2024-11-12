@@ -1,10 +1,9 @@
 import { resetDrive } from '@/redux/slices/driveSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import {  checkRideTransactionStatus, rideCompleted ,verifyOtp} from '@/redux/thunks/driveThunk';
+import {   rideCompleted ,verifyOtp} from '@/redux/thunks/driveThunk';
 import { cancelRideByDriver } from '@/Service/driverService';
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const useDriverRideStartPage = () => {
@@ -13,7 +12,6 @@ const useDriverRideStartPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
-    const navigate = useNavigate();
 
     const [otp,setOtp] = useState<string>("");
 
@@ -44,8 +42,6 @@ const useDriverRideStartPage = () => {
         const result = await dispatch(rideCompleted())
         if(result){
             toast.success("Ride Completed Successfully");
-            dispatch(checkRideTransactionStatus({rideRequestId:acceptedRide!.id}))
-            navigate("/payment-wait")
             
         }
         else{
@@ -58,7 +54,6 @@ const useDriverRideStartPage = () => {
       if(result){
         toast.success("Ride Canceled Successfully");
         dispatch(resetDrive());
-        navigate("/")
       }
       else{
         toast.error("Ride Cancellation Failed");

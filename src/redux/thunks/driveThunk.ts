@@ -35,7 +35,7 @@ export const checkDriveStatus = createAsyncThunk(
           method: 'GET',
         });
         
-        if(response.data=="Accepted"||response.data=="Requested"||response.data=="InProgress"){
+        if(response.data=="Accepted"||response.data=="Requested"||response.data=="InProgress"||response.data=="Unpaid"){
           dispatch(getRideAndRiderDetails())}
         return response.data;
       } catch (error: any) {
@@ -118,7 +118,7 @@ export const checkDriveStatus = createAsyncThunk(
   
   export const checkRideTransactionStatus = createAsyncThunk(
     'drive/rideTransactionStatus',
-    async ({ rideRequestId }: { rideRequestId: string }, { rejectWithValue, dispatch }):Promise<any> => {
+    async (rideRequestId :string , { rejectWithValue, dispatch }):Promise<any> => {
       try {
         const response = await axiosRequest({
           route: `/ride-transaction/status/${rideRequestId}`,
@@ -129,7 +129,7 @@ export const checkDriveStatus = createAsyncThunk(
         if (response.data === "Pending") {
           
           await new Promise(resolve => setTimeout(resolve, 2000)); 
-          dispatch(checkRideTransactionStatus({ rideRequestId })); 
+          dispatch(checkRideTransactionStatus( rideRequestId )); 
         }
         else{
           dispatch(setDriveStatus("Completed"))

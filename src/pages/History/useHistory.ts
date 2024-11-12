@@ -19,7 +19,6 @@ const useHistory = () => {
   };
 
   const handleSelect = async (rideId: string) => {
-    setLoading(true);
 
     try {
       
@@ -27,8 +26,6 @@ const useHistory = () => {
       setSelectedRideRequest(bookingDetails); 
     } catch (err) {
       console.error('Error fetching booking details:', err);
-    } finally {
-      setLoading(false);
     }
   };
 

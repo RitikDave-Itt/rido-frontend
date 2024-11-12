@@ -1,4 +1,3 @@
-import { Navigate } from 'react-router-dom';
 import { createSlice } from '@reduxjs/toolkit';
 import { IDriverDetail, IRideRequestForRider, RideRequestStatus } from '@/Interfaces/ride';
 import { checkRideStatus, getRideAndDriverDetail, initializeState, requestRide } from '../thunks/rideThunks';

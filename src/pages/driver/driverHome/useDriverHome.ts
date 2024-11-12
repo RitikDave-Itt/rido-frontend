@@ -6,7 +6,6 @@ import {   getRideList } from "@/Service/rideServices";
 import { getGeoLocationCords } from "@/utils/getGeoLocationCords";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const useDriverHome = () => {
@@ -19,7 +18,6 @@ const useDriverHome = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -66,7 +64,6 @@ const useDriverHome = () => {
       if (result) {
         dispatch(setAcceptedRide(selectedRide));
         toast.success("Ride Accepted Successfully");
-        navigate("/driver/start-ride");
       } else {
         toast.error("Error Accepting Ride")
         

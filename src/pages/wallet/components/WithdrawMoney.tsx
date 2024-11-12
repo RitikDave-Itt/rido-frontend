@@ -11,7 +11,7 @@ const WithdrawMoney = () => {
  
 
   return (
-    <div className="flex flex-col   w-full md:w-full   h-full justify-center items-center">
+    <div className="flex flex-col   w-full md:w-full justify-center items-center">
       <h3 className="text-2xl font-semibold mb-4">Withdraw Money</h3>
       <Input
       type='number'

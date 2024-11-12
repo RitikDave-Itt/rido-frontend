@@ -3,7 +3,7 @@ import { setLoading, setError, setUser, setIsLoggedIn, clearUser, setWallet } fr
 import { IUser } from "@/Interfaces/user";
 import Cookies from "js-cookie";
 import axiosRequest from "@/common/request"; 
-import {  initializeState } from "./rideThunks";
+import {   initializeState } from "./rideThunks";
 import { checkDriveStatus } from "./driveThunk";
 import { resetRide } from "../slices/rideSlice";
 import { resetDrive } from "../slices/driveSlice";
@@ -42,8 +42,16 @@ export const loginUser = createAsyncThunk(
         method: 'POST',
         body: credentials,
       });
+      if(response.data.user.role=="Driver"){
+        dispatch(initializeState())
+      }
+      else{
+        dispatch(initializeState())
+
+      }
 
       dispatch(setUser(response.data.user));
+
 
       
       Cookies.set("accessToken", response.data.accessToken, {
@@ -126,7 +134,8 @@ export const logoutUser = createAsyncThunk(
       
       dispatch(clearUser());
       dispatch(resetRide());
-      dispatch(resetDrive()) 
+      dispatch(resetDrive());
+       
     } catch (error) {
       console.error("Logout error:", error);
     } finally {

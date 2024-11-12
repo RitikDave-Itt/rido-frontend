@@ -5,12 +5,10 @@ import { cancelRideByRider } from '@/Service/rideServices';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 const useRideRequestWait = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { rideRequestId, driver, rideStatus, error } = useSelector((state: RootState) => state.ride);
-    const navigate = useNavigate();
 
     useEffect(() => {
       let intervalId: NodeJS.Timeout | undefined;
@@ -25,7 +23,6 @@ const useRideRequestWait = () => {
                 clearInterval(intervalId); 
                 dispatch(resetRide()); 
                 toast.error("driver canceled Ride");
-                navigate('/'); 
               });
               if (elapsedSeconds >= 200) {
                   clearInterval(intervalId);

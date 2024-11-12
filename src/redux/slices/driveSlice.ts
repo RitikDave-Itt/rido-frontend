@@ -59,7 +59,7 @@ const rideSlice = createSlice({
       state.driveStatus = "InProgress";
     })
     .addCase(rideCompleted.fulfilled, (state) => {  
-      state.driveStatus = "Completed";
+      state.driveStatus = "Unpaid";
     })
     .addCase(checkRideTransactionStatus.fulfilled, (state,action) => {  
       state.rideTransactionStatus = action.payload;

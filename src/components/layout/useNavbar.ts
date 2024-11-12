@@ -1,4 +1,4 @@
-import { RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { logoutUser } from '@/redux/thunks/userThunks';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ const useNavbar = () => {
     const { user } = useSelector((state: RootState) => state.user);
     const [isModalOpen, setIsModalOpen] = useState(!user);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
   
     const openModal = () => setIsModalOpen(true);   
     const closeModal = () => setIsModalOpen(!user); 
@@ -16,6 +16,10 @@ const useNavbar = () => {
       if (user) {
         closeModal();
       }
+      else{
+        setIsModalOpen(true);
+      }
+      
     }, [user]);
   
     const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -26,10 +30,14 @@ const useNavbar = () => {
       setAnchorEl(null);
     };
   
-    const handleLogout =  () => {
+    const handleLogout =   () => {
       dispatch(logoutUser());
       handleMenuClose();
-      window.location.reload();
+    };
+    const [isMenuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+      setMenuOpen(!isMenuOpen);
     };
   return (
 
@@ -41,7 +49,9 @@ const useNavbar = () => {
     closeModal,
     handleMenuOpen,
     handleMenuClose,
-    handleLogout
+    handleLogout,
+    toggleMenu,
+    isMenuOpen,
 
 })
 }

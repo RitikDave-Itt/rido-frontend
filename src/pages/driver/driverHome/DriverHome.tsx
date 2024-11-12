@@ -25,6 +25,7 @@ const DriverHome: React.FC = () => {
   return (
     <div className="flex flex-col-reverse md:flex-row justify-evenly mt-4 w-[95%] h-full bg-background-light">
       <div className="flex flex-col items-center p-4 h-full md:w-1/2 w-full ">
+      {/* <img src="images/nearbyRides.png" className="w-[40%] drop-shadow-lg  " alt="" /> */}
         <h2 className="text-2xl font-bold mb-6 w-full">Nearby Rides</h2>
 
 
