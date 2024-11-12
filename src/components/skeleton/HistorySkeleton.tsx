@@ -2,8 +2,8 @@ import { Skeleton } from '@mui/material';
 
 const HistorySkeleton = () => {
   return (
-    <div className="flex justify-center p-6 bg-background-light h-full w-full">
-      <div className="w-full md:w-[60%]">
+    <div className="flex flex-col-reverse justify-center p-6 bg-background-light h-full w-full md:flex-row">
+      <div className="w-full md:w-[60%] md:h-full">
         <h1 className="w-full text-2xl font-semibold mb-4 text-secondary">
           <Skeleton width="30%" />
         </h1>
@@ -38,6 +38,9 @@ const HistorySkeleton = () => {
         <div className="w-full flex justify-center items-center">
           <Skeleton variant="rectangular" width="25%" height={40} />
         </div>
+      </div>
+      <div className="w-full md:w-[40%] md:h-full p-4">
+        <Skeleton variant="rectangular" height="100%" />
       </div>
     </div>
   );

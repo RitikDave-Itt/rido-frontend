@@ -38,6 +38,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-evenly mt-4 w-[95%] h-full ">
+      
       <div className=" flex flex-col items-center  p-4 h-full md:w-1/2 w-full " ref={wrapperRef}>
         <h2 className="text-2xl font-bold mb-6 w-full">Where's Next? Set Your Ride</h2>
 
@@ -94,6 +95,7 @@ const Home = () => {
           </div>
 
           <div className="mb-4 relative w-full">
+
             <label className="block text-sm font-medium text-gray-700" htmlFor="destination">
               Destination
             </label>
@@ -174,7 +176,9 @@ const Home = () => {
         <div className='md:w-1/2 w-full'>
           {fareList ? <FareList fareList={fareList} selectedVehicle={selectedVehicle} handleSelectVehicle={handleSelectVehicle} /> :
 
-            <div className="flex items-center justify-center h-full w-full ">
+            <div className="flex flex-col items-center justify-center h-full w-full ">
+              
+
               <img src="/images/taxi2.gif" alt="" className='w-[75%]' />
             </div>
 

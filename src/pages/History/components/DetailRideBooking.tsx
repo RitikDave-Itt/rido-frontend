@@ -1,3 +1,4 @@
+import { formatUTCPlus530 } from "@/utils/time";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -37,13 +38,13 @@ const DetailRideBooking = ({ selectedRide }: any) => {
               </p>
             )}
             <p>
-              <strong>Pickup Time: </strong>
-              {new Date(bookingData?.pickupTime).toLocaleString() || "N/A"}
-            </p>
-            <p>
-              <strong>Dropoff Time: </strong>
-              {new Date(bookingData?.dropoffTime).toLocaleString() || "N/A"}
-            </p>
+  <strong>Pickup Time: </strong>
+  {bookingData?.pickupTime ? formatUTCPlus530(bookingData.pickupTime) : "N/A"}
+</p>
+<p>
+  <strong>Dropoff Time: </strong>
+  {bookingData?.dropoffTime ? formatUTCPlus530(bookingData.dropoffTime) : "N/A"}
+</p>
           </div>
 
           <div className="mt-6">
@@ -53,16 +54,7 @@ const DetailRideBooking = ({ selectedRide }: any) => {
             </p>
           </div>
 
-          {/* <div className="mt-6">
-            <p>
-              <strong>Rating: </strong>
-              {review?.rating !== null ? review?.rating : "4"} / 5
-            </p>
-            <p>
-              <strong>Comment: </strong>
-              {review?.comment || "good ride"}
-            </p>
-          </div> */}
+       
         </div>
       ) : (
         <div className="text-center p-6">

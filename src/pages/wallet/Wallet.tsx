@@ -1,55 +1,17 @@
-import { useEffect, useState } from 'react';
 import AddMoney from './components/AddMoney';
 import WithdrawMoney from './components/WithdrawMoney';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { fetchWallet } from '@/redux/thunks/userThunks';
 import TransactionRowCard from '@/components/TransactionRowCard';
-import { Transaction } from '@/Interfaces/wallet';
-import { fetchWalletTransactions } from '@/Service/walletService';
+import useWallet from './useWallet';
 
 const Wallet = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [pageNo, setPageNo] = useState(1);
-  const [totalTransactions, setTotalTransactions] = useState(0);
-  const { wallet } = useSelector((state: RootState) => state.user);
-  const { user } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const [isAddMoneyVisible, setIsAddMoneyVisible] = useState(user?.role === 'User');
-
+  const {   transactions,
+    totalTransactions,
+    isAddMoneyVisible,
+    handleLoadMore,
+    wallet,
   
-  useEffect(() => {
-    dispatch(fetchWallet());
-  }, [dispatch]);
-
+  } = useWallet();
   
-  useEffect(() => {
-    const loadTransactions = async () => {
-      const { items, totalCount } = await fetchWalletTransactions(pageNo);
-      setTransactions(prevTransactions => [...prevTransactions, ...items]);
-      setTotalTransactions(totalCount);
-    };
-
-    loadTransactions();
-  }, [pageNo]);
-
-  useEffect(() => {
-    if (wallet?.balance !== undefined) {
-      const loadTransactions = async () => {
-        setTransactions([]);  
-        const { items, totalCount } = await fetchWalletTransactions(1);  
-        setTransactions(items);
-        setTotalTransactions(totalCount);
-      };
-
-      loadTransactions();
-    }
-  }, [wallet?.balance]);
-
-  const handleLoadMore = () => {
-    setPageNo(prevPage => prevPage + 1);
-  };
 
   return (
     <div className="flex flex-col md:flex-row h-full w-full">

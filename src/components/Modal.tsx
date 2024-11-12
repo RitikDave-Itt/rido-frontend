@@ -17,11 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       ></div>
       
       <div className=" flex items-center relative justify-center    rounded-lg  w-[70%] h-full max-w-[90vw] p-6 z-10">
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3   text-gray-600 hover:text-gray-900"
-        >
-X        </button>
+    
         
         {children}
       </div>

@@ -3,18 +3,17 @@ import useHistory from "./useHistory";
 import DetailRideBooking from "./components/DetailRideBooking";
 
 const History = () => {
-  const { historyList
-    ,loadMore
-    ,hasMore
-    ,loading
-    ,handleSelect
-    ,selectedRideRequest
+  const {
+    historyList,
+    loadMore,
+    hasMore,
+    loading,
+    handleSelect,
+    selectedRideRequest,
   } = useHistory();
 
-  if(loading){
-    return(
-        <HistorySkeleton/>
-    )
+  if (loading) {
+    return <HistorySkeleton />;
   }
 
   return (
@@ -23,7 +22,7 @@ const History = () => {
         <h1 className="w-full text-2xl font-semibold mb-4 text-secondary">
           History
         </h1>
-        <div className="space-y-4">
+        <div className="space-y-4 p-3">
           {historyList.map((ride) => (
             <div
               key={ride.id}
@@ -61,43 +60,44 @@ const History = () => {
                 </p>
               </div>
               <div className="flex-grow flex flex-col justify-center items-center">
-               { ride.status==="Completed" && <p className="text-center text-base text-gray-800 font-bold">
+                {ride.status === "Completed" && (
+                  <p className="text-center text-base text-gray-800 font-bold">
                     ₹ {ride.amount.toFixed(2)}
-                </p>}
+                  </p>
+                )}
                 <p className="font-normal text-gray-800 text-center">
-                    {new Date(ride.pickupTime).toLocaleTimeString("en-IN", {
-                      timeZone: "Asia/Kolkata",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                  {new Date(
+                    new Date(ride.pickupTime).getTime() + 5.5 * 60 * 60 * 1000
+                  ).toLocaleTimeString("en-IN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </p>
-                <p className="  font-normal text-gray-800  text-center">
-                    {new Date(ride.pickupTime).toLocaleDateString("en-IN", {
-                      timeZone: "Asia/Kolkata",
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}
+                <p className="font-normal text-gray-800 text-center">
+                  {new Date(
+                    new Date(ride.pickupTime).getTime() + 5.5 * 60 * 60 * 1000
+                  ).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
                 </p>
               </div>
             </div>
           ))}
         </div>
         <div className="w-full flex justify-center items-center">
-        {hasMore && (
-          <button
-            className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center w-1/4"
-            onClick={loadMore}
-          >
-            loadMore
-          </button>
-        )}
+          {hasMore && (
+            <button
+              className="mt-1 p-2 bg-primary text-white rounded-md flex items-center justify-center w-1/4"
+              onClick={loadMore}
+            >
+              loadMore
+            </button>
+          )}
         </div>
       </div>
-      {
-      <DetailRideBooking selectedRide={selectedRideRequest} />
-}
-
+      {<DetailRideBooking selectedRide={selectedRideRequest} />}
     </div>
   );
 };
